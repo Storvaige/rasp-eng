@@ -13,51 +13,51 @@ MATRIX_MAX_VALUE = 7
 MATRIX_SIZE = 8
     
 while True:
-    # variables:
+    #Variables
     gameOverFlag = False
     growSnakeFlag = False
     generateRandomFoodFlag = False
     snakeMovementDelay = 0.5
     snakeMovementDelayDecrease = -0.02
 
-    # start delay:
+    #Start delay
     time.sleep(START_DELAY)
 
-    # set default snake starting position (values are chosen by preference):
+    #Position of the start
     snakePosX = [3]
     snakePosY = [6]
 
-    # generate random food position:
+    #Position of pixel random
     while True:
         foodPosX = random.randint(0, 7)
         foodPosY = random.randint(0, 7)
         if foodPosX != snakePosX[0] or foodPosY != snakePosY[0]:
             break
 
-    # set default snake starting direction (values are chosen by preference):
+    #Random direction for the snake
     movementX = 0
     movementY = -1
 
     # -----------------------------------
-    #             game loop
+    #              Loop
     # -----------------------------------
     while not gameOverFlag:
-        # check if snake eats food:
+        #Eat pixel
         if foodPosX == snakePosX[0] and foodPosY == snakePosY[0]:
             growSnakeFlag = True
             generateRandomFoodFlag = True
             snakeMovementDelay += snakeMovementDelayDecrease
 
-        # check if snake bites itself:
+        #If Snake eat itself = Lose
         for i in range(1, len(snakePosX)):
             if snakePosX[i] == snakePosX[0] and snakePosY[i] == snakePosY[0]:
                 gameOverFlag = True
 
-        # check if game-over:
+        #Game Over
         if gameOverFlag:
             break
 
-        # check joystick events:
+        #Use the joystick
         events = senseHat.stick.get_events()
         for event in events:
             if event.direction == "left" and movementX != 1:
@@ -73,13 +73,13 @@ while True:
                 movementY = 1
                 movementX = 0
 
-        # grow snake:
+        #+1 when you eat Pixel
         if growSnakeFlag:
             growSnakeFlag = False
             snakePosX.append(0)
             snakePosY.append(0)
 
-        # move snake:
+        #Movement
         for i in range((len(snakePosX) - 1), 0, -1):
             snakePosX[i] = snakePosX[i - 1]
             snakePosY[i] = snakePosY[i - 1]
@@ -87,7 +87,7 @@ while True:
         snakePosX[0] += movementX
         snakePosY[0] += movementY
 
-        # check game borders:
+        #Border of the game
         if snakePosX[0] > MATRIX_MAX_VALUE:
             snakePosX[0] -= MATRIX_SIZE
         elif snakePosX[0] < MATRIX_MIN_VALUE:
@@ -97,7 +97,7 @@ while True:
         elif snakePosY[0] < MATRIX_MIN_VALUE:
             snakePosY[0] += MATRIX_SIZE
 
-        # spawn random food:
+        #Spawn pixel randomly
         if generateRandomFoodFlag:
             generateRandomFoodFlag = False
             retryFlag = True
@@ -110,11 +110,11 @@ while True:
                         retryFlag = True
                         break
 
-        # update matrix:
+        #Update
         senseHat.clear()
         senseHat.set_pixel(foodPosX, foodPosY, RED)
         for x, y in zip(snakePosX, snakePosY):
             senseHat.set_pixel(x, y, GREEN)
 
-        # snake speed (game loop delay):
+        #Speed for the snack (Because the rasp is very slow --')
         time.sleep(snakeMovementDelay)
