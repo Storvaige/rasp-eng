@@ -78,16 +78,12 @@ while True:
         sense.show_letter("M")      # Enter key
         if gameStarted == False:
           gameStarted = True
-          
+
       if event.direction == "up": #Up = Red
         sense.show_letter("U")      # Enter key
         if gameStarted == True:
 
-
-
-
           
-
 while gameStarted == True:
   displayColor()
   
