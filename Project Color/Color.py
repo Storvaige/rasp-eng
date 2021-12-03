@@ -1,5 +1,8 @@
+from time import sleep
 from sense_hat import SenseHat
 import random
+
+gameStarted = False
 
 #Define some colors
 r=(255,0,0)
@@ -34,25 +37,57 @@ sense.set_pixel(6,4,(y))
 sense.set_pixel(7,3,(y))
 sense.set_pixel(7,4,(y))
 
+
+counter=3
+
 # For the middle
-nbrandom = random.randint(1, 4)
-if nbrandom == 1:
-    sense.set_pixel(3, 3, r)
-    sense.set_pixel(3, 4, r)
-    sense.set_pixel(4, 3, r)
-    sense.set_pixel(4, 4, r)
-elif nbrandom == 2:
-    sense.set_pixel(3, 3, g)
-    sense.set_pixel(3, 4, g)
-    sense.set_pixel(4, 3, g)
-    sense.set_pixel(4, 4, g)
-elif nbrandom == 3:
-    sense.set_pixel(3, 3, b)
-    sense.set_pixel(3, 4, b)
-    sense.set_pixel(4, 3, b)
-    sense.set_pixel(4, 4, b)
-else:
-    sense.set_pixel(3, 3, y)
-    sense.set_pixel(3, 4, y)
-    sense.set_pixel(4, 3, y)
-    sense.set_pixel(4, 4, y)
+def displayColor():
+  display = counter
+  while(display!=0):
+    display = display - 1
+    nbrandom = random.randint(1, 4)
+    if nbrandom == 1:
+        sense.set_pixel(3, 3, r)
+        sense.set_pixel(3, 4, r)
+        sense.set_pixel(4, 3, r)
+        sense.set_pixel(4, 4, r)
+    elif nbrandom == 2:
+        sense.set_pixel(3, 3, g)
+        sense.set_pixel(3, 4, g)
+        sense.set_pixel(4, 3, g)
+        sense.set_pixel(4, 4, g)
+    elif nbrandom == 3:
+        sense.set_pixel(3, 3, b)
+        sense.set_pixel(3, 4, b)
+        sense.set_pixel(4, 3, b)
+        sense.set_pixel(4, 4, b)
+    else:
+        sense.set_pixel(3, 3, y)
+        sense.set_pixel(3, 4, y)
+        sense.set_pixel(4, 3, y)
+        sense.set_pixel(4, 4, y)
+    
+  display +=1 
+  
+while True:
+  for event in sense.stick.get_events():
+    # Check if the joystick was pressed
+    if event.action == "pressed":
+
+      if event.direction == "middle":
+        sense.show_letter("M")      # Enter key
+        if gameStarted == False:
+          gameStarted = True
+          
+      if event.direction == "up": #Up = Red
+        sense.show_letter("U")      # Enter key
+        if gameStarted == True:
+
+
+
+
+          
+
+while gameStarted == True:
+  displayColor()
+  
