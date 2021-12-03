@@ -1,9 +1,6 @@
 from sense_hat import SenseHat
 import random
 
-
-
-
 #Define some colors
 r=(255,0,0)
 g=(0,255,0)
