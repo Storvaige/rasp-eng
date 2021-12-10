@@ -20,7 +20,7 @@ while True:
     snakeMovementDelay = 0.5
     snakeMovementDelayDecrease = -0.02
 
-    #Start delay
+    #Start delayQ
     time.sleep(START_DELAY)
 
     #Position of the start
@@ -55,6 +55,7 @@ while True:
 
         #Game Over
         if gameOverFlag:
+            sense.show_message("You Lose", text_colour=(255, 0, 0))
             break
 
         #Use the joystick
@@ -116,5 +117,5 @@ while True:
         for x, y in zip(snakePosX, snakePosY):
             senseHat.set_pixel(x, y, GREEN)
 
-        #Speed for the snack (Because the rasp is very slow --')
+        #Speed for the snack (Because it's very easy ^^)
         time.sleep(snakeMovementDelay)
